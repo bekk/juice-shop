@@ -1,0 +1,80 @@
+application:
+  domain: bekk.no
+  name: 'Bekk CTF'
+  logo: 'https://github.com/bekk/juice-shop/raw/master/frontend/src/assets/public/images/bekklogo.png'
+  favicon: 'https://www.bekk.no/favicon.ico'
+  showChallengeSolvedNotifications: true
+  showChallengeHints: false
+  theme: bluegrey-lightgreen
+  gitHubRibbon: false
+  showVersionNumber: false
+  twitterUrl: 'https://twitter.com/livetibekk'
+  facebookUrl: null
+  slackUrl: null
+  pressKitUrl: null
+  altcoinName: BekkCoin
+  cookieConsent:
+    backgroundColor: '#6D7ABB'
+    textColor: '#ffffff'
+    buttonColor: '#A1F5E3'
+    buttonTextColor: '#ffffff'
+    message: 'Denne nettsiden benytter en mengde med 3. parts informasjonskapsler for din beleilighet og sporbarhet.'
+    dismissText: 'Sure, whatever!'
+    linkText: 'Hvordan kan jeg skru av dette?'
+    linkUrl: 'https://www.youtube.com/watch?v=9PnbKL3wuH4'
+  securityTxt:
+    contact: 'mailto:donotreply@bekk.no'
+    encryption: ~
+products:
+  -
+    name: 'Bekk Juice'
+    description: 'Laget med vann fra naturlige data streams.'
+    price: 19.00
+    image: banana_juice.jpg
+  -
+    name: 'Antikke Bekk Band Billetter'
+    description: 'Fra Oslo-Tour 2002'
+    price: 249.00
+    image: 'http://icons.iconarchive.com/icons/webalys/kameleon.pics/512/Rocker-icon.png'
+    reviews:
+      - { text: 'Bekk Band for life ♥', author: Jøran }
+  -
+    name: 'Kaffekapsler (600 stk)'
+    description: '2 dagers forbruk'
+    price: 2750.00
+    image: 'http://icons.iconarchive.com/icons/tatice/cristal-intense/128/Java-icon.png'
+  -
+    name: 'Eplejus (1000ml)'
+    description: 'Den ekte, friske og gode smaken av epler har gjort den originale Sunniva® eplejuicen til en familiefavoritt siden 1968.'
+    price: 2750.00
+    image: apple_juice.jpg
+  -
+    name: 'Klistremerke'
+    description: 'Juice-shop klistremerke'
+    price: 100.00
+    image: sticker.png
+  -
+    name: 'Flagg'
+    description: '"Ikke fang meg flagg" - 2019 Edition'
+    price: 114.00
+    image: fan_girlie.jpg
+  -
+    name: 'Bekk tattoo, 50 pack'
+    description: 'Se ut som en Bekker for resten av livet'
+    price: 400
+    image: 'http://icons.iconarchive.com/icons/icons8/windows-8/512/Cultures-Tattoo-Machine-icon.png'
+    urlForProductTamperingChallenge: 'https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project'
+  -
+    name: 'Christmas Super-Surprise-Box (2014 Edition)'
+    description: 'Inneholder et random utvalg av klistremerker og tre unisex t-shirts, til en uslåelig pris!'
+    price: 29.99
+    image: mystery_box.png
+    useForChristmasSpecialChallenge: true
+  -
+    name: 'Mozilla Austin CTF Logo (3D-printed)'
+    description: 'Denne dingsen er uhyre skjelden, og ble håndlaget i Sverige. Dette er grunnen til at den er sykt dyr, til tross for sin manglende funksjon i livet..'
+    price: 99.99
+    image: 3d_keychain.jpg
+    fileForRetrieveBlueprintChallenge: 'https://github.com/mozilla/ctf-austin/raw/master/app/public/images/products/3d_keychain.stl'
+ctf:
+  showFlagsInNotifications: true
