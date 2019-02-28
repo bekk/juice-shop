@@ -24,7 +24,8 @@ application:
     linkUrl: 'https://www.youtube.com/watch?v=9PnbKL3wuH4'
   securityTxt:
     contact: 'mailto:donotreply@bekk.no'
-    encryption: ~
+    encryption: 'https://keybase.io/bkimminich/pgp_keys.asc?fingerprint=19c01cb7157e4645e9e2c863062a85a8cbfbdcda'
+    acknowledgements: '/#/score-board'
 products:
   -
     name: 'Bekk Juice'
