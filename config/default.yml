@@ -7,7 +7,7 @@ application:
   favicon: 'https://www.bekk.no/favicon.ico'
   numberOfRandomFakeUsers: 0
   showChallengeSolvedNotifications: true
-  showChallengeHints: false
+  showChallengeHints: true
   theme: bluegrey-lightgreen
   gitHubRibbon: false
   showVersionNumber: false
