@@ -7,18 +7,19 @@ app/
 uploads/complaints/*.*
 !uploads/complaints/.gitkeep
 ftp/legal.md
+package-lock.json
 
 # Build
 .nyc_output/
 .sass-cache/
 build/
+cache/
 dist/
 logs/
 vagrant/.vagrant/
 *.orig
 *.out
 *.log
-package-lock.json
 
 # IDEs
 .idea/
@@ -39,7 +40,6 @@ config/*.yml
 !config/ctf.yml
 !config/fbctf.yml
 !config/default.yml
-!config/sickshop.yml
 !config/juicebox.yml
 !config/quiet.yml
 !config/test.yml

@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ChallengeService } from '../Services/challenge.service'
 import { ConfigurationService } from '../Services/configuration.service'
 import { WindowRefService } from '../Services/window-ref.service'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { MatDividerModule } from '@angular/material/divider'
@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatTableModule } from '@angular/material/table'
 import { MatCardModule } from '@angular/material/card'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatIconModule } from '@angular/material/icon'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { NgxSpinnerModule } from 'ngx-spinner'
 import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing'
@@ -66,7 +67,7 @@ describe('ScoreBoardComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         TranslateModule.forRoot(),
         BarRatingModule,
         BrowserAnimationsModule,
@@ -78,7 +79,8 @@ describe('ScoreBoardComponent', () => {
         MatProgressBarModule,
         MatExpansionModule,
         MatTooltipModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatIconModule
       ],
       declarations: [ ScoreBoardComponent ],
       providers: [
@@ -106,11 +108,11 @@ describe('ScoreBoardComponent', () => {
   })
 
   it('should hold existing challenges', () => {
-    challengeService.find.and.returnValue(of([ { description: 'XSS' }, { description: 'CSRF' } ]))
+    challengeService.find.and.returnValue(of([ { description: 'XSS' }, { description: 'XXE' } ]))
     component.ngOnInit()
     expect(component.challenges.length).toBe(2)
     expect(component.challenges[0].description).toBe('XSS')
-    expect(component.challenges[1].description).toBe('CSRF')
+    expect(component.challenges[1].description).toBe('XXE')
   })
 
   it('should log the error on retrieving configuration', fakeAsync(() => {
@@ -161,20 +163,30 @@ describe('ScoreBoardComponent', () => {
   })
 
   it('should return an empty array if challenges has a falsy value while filtering datasource', () => {
-    let value = component.filterToDataSource(null,null,null)
+    let value = component.filterToDataSource(null)
     expect(value).toEqual([])
   })
 
   it('should return an empty array if challenges has a falsy value while filtering challenges by difficulty', () => {
     component.challenges = null
-    let value = component.filterChallengesByDifficulty(null)
-    expect(value).toEqual([])
+    component.populateFilteredChallengeLists()
+    expect(component.totalChallengesOfDifficulty[0]).toEqual([])
+    expect(component.totalChallengesOfDifficulty[1]).toEqual([])
+    expect(component.totalChallengesOfDifficulty[2]).toEqual([])
+    expect(component.totalChallengesOfDifficulty[3]).toEqual([])
+    expect(component.totalChallengesOfDifficulty[4]).toEqual([])
+    expect(component.totalChallengesOfDifficulty[5]).toEqual([])
   })
 
   it('should return an empty array if challenges has a falsy value while filtering solved challenges by difficulty', () => {
     component.challenges = null
-    let value = component.filterSolvedChallengesOfDifficulty(null)
-    expect(value).toEqual([])
+    component.populateFilteredChallengeLists()
+    expect(component.solvedChallengesOfDifficulty[0]).toEqual([])
+    expect(component.solvedChallengesOfDifficulty[1]).toEqual([])
+    expect(component.solvedChallengesOfDifficulty[2]).toEqual([])
+    expect(component.solvedChallengesOfDifficulty[3]).toEqual([])
+    expect(component.solvedChallengesOfDifficulty[4]).toEqual([])
+    expect(component.solvedChallengesOfDifficulty[5]).toEqual([])
   })
 
   it('should complete a level when all challenges of that difficulty are solved', () => {
@@ -297,4 +309,27 @@ describe('ScoreBoardComponent', () => {
     expect(component.challenges[0].hint).toBe('Click to open hints.')
   })
 
+  it('should show GitHub button by default', () => {
+    configurationService.getApplicationConfiguration.and.returnValue(of({ application: {} }))
+    component.ngOnInit()
+    expect(component.gitHubRibbon).toBe(true)
+  })
+
+  it('should hide GitHub ribbon if so configured', () => {
+    configurationService.getApplicationConfiguration.and.returnValue(of({ application: { gitHubRibbon: false } }))
+    component.ngOnInit()
+    expect(component.gitHubRibbon).toBe(false)
+  })
+
+  it('should show GitHub button by default', () => {
+    configurationService.getApplicationConfiguration.and.returnValue(of({ application: {} }))
+    component.ngOnInit()
+    expect(component.showHackingInstructor).toBeFalsy()
+  })
+
+  it('should hide GitHub ribbon if so configured', () => {
+    configurationService.getApplicationConfiguration.and.returnValue(of({ application: { showHackingInstructor: true } }))
+    component.ngOnInit()
+    expect(component.showHackingInstructor).toBeTruthy()
+  })
 })

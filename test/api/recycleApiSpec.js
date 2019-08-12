@@ -26,21 +26,13 @@ describe('/api/Recycles', () => {
       })
   })
 
-  it('GET all recycles is forbidden via public API', () => {
+  it('Will prevent GET all recycles from this endpoint', () => {
     return frisby.get(API_URL + '/Recycles')
-      .expect('status', 401)
-  })
-
-  it('GET all recycles', () => {
-    return frisby.get(API_URL + '/Recycles', { headers: authHeader })
       .expect('status', 200)
-  })
-})
-
-describe('/api/Recycles/:id', () => {
-  it('GET existing recycle by id is forbidden', () => {
-    return frisby.get(API_URL + '/Recycles/1', { headers: authHeader })
-      .expect('status', 401)
+      .expect('header', 'content-type', /application\/json/)
+      .expect('jsonTypes', 'data', {
+        err: 'Sorry, this endpoint is not supported.'
+      })
   })
 
   it('PUT update existing recycle is forbidden', () => {

@@ -6,7 +6,7 @@ import { CookieModule, CookieService } from 'ngx-cookie'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { ChallengeService } from '../Services/challenge.service'
 import { ConfigurationService } from '../Services/configuration.service'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { SocketIoService } from '../Services/socket-io.service'
 
@@ -32,7 +32,7 @@ describe('ChallengeSolvedNotificationComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         TranslateModule.forRoot(),
         CookieModule.forRoot(),
         ClipboardModule,
@@ -60,5 +60,25 @@ describe('ChallengeSolvedNotificationComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should delete notifictions', () => {
+    component.notifications = [
+      'foo',
+      'bar'
+    ]
+    component.closeNotification(0)
+
+    expect(component.notifications).toEqual(['bar'])
+  })
+
+  it('should delte all notifications if the shiftKey was pressed', () => {
+    component.notifications = [
+      'foo',
+      'bar'
+    ]
+    component.closeNotification(0, true)
+
+    expect(component.notifications).toEqual([])
   })
 })

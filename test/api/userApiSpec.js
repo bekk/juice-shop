@@ -19,6 +19,14 @@ describe('/api/Users', () => {
       .expect('status', 200)
   })
 
+  it('GET all users doesnt include passwords', () => {
+    return frisby.get(API_URL + '/Users', { headers: authHeader })
+      .expect('status', 200)
+      .expect('jsonTypes', 'data.*', {
+        'password': Joi.any().forbidden()
+      })
+  })
+
   it('POST new user', () => {
     return frisby.post(API_URL + '/Users', {
       headers: jsonHeader,
@@ -32,10 +40,8 @@ describe('/api/Users', () => {
       .expect('jsonTypes', 'data', {
         id: Joi.number(),
         createdAt: Joi.string(),
-        updatedAt: Joi.string()
-      })
-      .expect('json', 'data', {
-        password: insecurity.hash('hooooorst')
+        updatedAt: Joi.string(),
+        password: Joi.any().forbidden()
       })
   })
 
@@ -53,10 +59,10 @@ describe('/api/Users', () => {
       .expect('jsonTypes', 'data', {
         id: Joi.number(),
         createdAt: Joi.string(),
-        updatedAt: Joi.string()
+        updatedAt: Joi.string(),
+        password: Joi.any().forbidden()
       })
       .expect('json', 'data', {
-        password: insecurity.hash('hooooorst'),
         isAdmin: true
       })
   })
@@ -132,7 +138,7 @@ describe('/rest/user/authentication-details', () => {
 })
 
 describe('/rest/user/whoami', () => {
-  xit('GET own user id and email on who-am-i request', () => {
+  it('GET own user id and email on who-am-i request', () => {
     return frisby.post(REST_URL + '/user/login', {
       headers: jsonHeader,
       body: {
@@ -142,11 +148,12 @@ describe('/rest/user/whoami', () => {
     })
       .expect('status', 200)
       .then(({ json }) => {
-        return frisby.get(REST_URL + '/user/whoami', { headers: { 'Authorization': 'Bearer ' + json.authentication.token } })
+        return frisby.get(REST_URL + '/user/whoami', { headers: { Cookie: 'token=' + json.authentication.token } })
           .expect('status', 200)
           .expect('header', 'content-type', /application\/json/)
           .expect('jsonTypes', 'user', {
-            id: Joi.number()
+            id: Joi.number(),
+            email: Joi.string()
           })
           .expect('json', 'user', {
             email: 'bjoern.kimminich@googlemail.com'
